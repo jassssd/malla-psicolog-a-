@@ -1,4 +1,3 @@
-
 function aprobar(boton, siguienteId) {
   boton.classList.remove('bloqueado');
   boton.classList.add('aprobado');
