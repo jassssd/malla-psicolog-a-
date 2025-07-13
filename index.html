@@ -2,70 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Malla Psicología UCSC - Completa</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #b30000;
-      margin-bottom: 30px;
-    }
-
-    .contenedor {
-      display: flex;
-      overflow-x: auto;
-      gap: 20px;
-      padding-bottom: 40px;
-    }
-
-    .semestre {
-      min-width: 220px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    .semestre h2 {
-      text-align: center;
-      color: #333;
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .ramo {
-      display: block;
-      margin: 6px 0;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 5px;
-      background-color: #e0e0e0;
-      cursor: pointer;
-      font-size: 14px;
-      text-align: left;
-    }
-
-    .ramo.bloqueado {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    .ramo.aprobado {
-      background-color: #a8e6a1;
-    }
-  </style>
+  <title>Malla Psicología UCSC</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>Malla Interactiva - Psicología UCSC</h1>
+
+<div class="top-bar">
+  <div class="progress">Ramos aprobados: <span id="contador">0</span>/X</div>
+  <button id="reset" onclick="reiniciarMalla()">Reiniciar</button>
+</div>
 
 <div class="contenedor">
 
@@ -195,3 +142,7 @@ function aprobar(boton, siguientes) {
   <button class="ramo bloqueado" id="10.1" disabled>Práctica II</button>
   <button class="ramo bloqueado" id="10.2" disabled>Supervisión Final</button>
 </div>
+
+<script src="script.js"></script>
+</body>
+</html>
