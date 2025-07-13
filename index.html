@@ -20,35 +20,35 @@
   <div class="semestre">
     <h2>Semestre 1</h2>
     <button class="ramo" onclick="aprobar(this, ['3.1'])" id="1.1">Historia y Fundamentos</button>
-    <button class="ramo" onclick="aprobar(this, ['2.1'])" id="1.2">Sociología</button>
-    <button class="ramo" onclick="aprobar(this, ['3.2'])" id="1.3">Filosofía</button>
-    <button class="ramo" onclick="aprobar(this, ['2.2'])" id="1.4">Psicobiología</button>
-    <button class="ramo" onclick="aprobar(this, ['5.1'])" id="1.5">Antropología Cultural</button>
-    <button class="ramo" onclick="aprobar(this, ['5.5'])" id="1.6">Comunicación Oral</button>
-    <button class="ramo" onclick="aprobar(this, ['2.7'])" id="1.7">Inglés I</button>
+    <button class="ramo" onclick="aprobar(this, ['2.2'])" id="1.2">Sociología</button>
+    <button class="ramo" onclick="aprobar(this, ['2.2, 2.3'])" id="1.3">Filosofía</button>
+    <button class="ramo" onclick="aprobar(this, ['2.4'])" id="1.4">Psicobiología</button>
+    <button class="ramo" onclick="aprobar(this, ['4.3'])" id="1.5">Antropología Cultural</button>
+    <button class="ramo" onclick= id="1.6">Comunicación En Español</button>
+    <button class="ramo" onclick="aprobar(this, ['2.7'])" id="1.7">Comunicación En Inglés I</button>
   </div>
 
   <!-- SEMESTRE 2 -->
   <div class="semestre">
     <h2>Semestre 2</h2>
-    <button class="ramo bloqueado" id="2.1" disabled onclick="aprobar(this, ['5.1'])">Procesos Psicológicos</button>
-    <button class="ramo bloqueado" id="2.2" disabled onclick="aprobar(this, ['3.4'])">Epistemología</button>
-    <button class="ramo bloqueado" id="2.3" disabled onclick="aprobar(this, ['3.3'])">Teológicos</button>
-    <button class="ramo bloqueado" id="2.4" disabled onclick="aprobar(this, ['4.4'])">Psicofisiología</button>
+    <button class="ramo bloqueado" id="2.1" disabled onclick="aprobar(this, [])">Procesos Psicológicos</button>
+    <button class="ramo bloqueado" id="2.2" disabled onclick="aprobar(this, ['3.2'])">Epistemología</button>
+    <button class="ramo bloqueado" id="2.3" disabled>Teológicos</button>
+    <button class="ramo bloqueado" id="2.4" disabled onclick="aprobar(this, ['3.4'])">Psicofisiología</button>
     <button class="ramo bloqueado" id="2.5" disabled onclick="aprobar(this, ['3.5'])">Desarrollo I</button>
     <button class="ramo bloqueado" id="2.6" disabled onclick="aprobar(this, ['4.5'])">Taller Pers. I</button>
-    <button class="ramo bloqueado" id="2.7" disabled onclick="aprobar(this, ['3.6'])">Inglés II</button>
+    <button class="ramo bloqueado" id="2.7" disabled>Comunicación En Inglés II</button>
   </div>
 
   <!-- SEMESTRE 3 -->
   <div class="semestre">
     <h2>Semestre 3</h2>
     <button class="ramo bloqueado" id="3.1" disabled onclick="aprobar(this, ['4.1'])">Enfoques I</button>
-    <button class="ramo bloqueado" id="3.2" disabled onclick="aprobar(this, ['4.2'])">Investigación</button>
-    <button class="ramo bloqueado" id="3.3" disabled onclick="aprobar(this, ['4.3'])">Aprendizaje</button>
-    <button class="ramo bloqueado" id="3.4" disabled onclick="aprobar(this, ['4.4'])">Neuropsicología</button>
-    <button class="ramo bloqueado" id="3.5" disabled onclick="aprobar(this, ['4.5'])">Desarrollo II</button>
-    <button class="ramo bloqueado" id="3.6" disabled onclick="aprobar(this, ['4.6'])">Integración I</button>
+    <button class="ramo bloqueado" id="3.2" disabled onclick="aprobar(this, ['4.2'])">Bases Para La Investigación</button>
+    <button class="ramo bloqueado" id="3.3" disabled>Psicologia del Aprendizaje</button>
+    <button class="ramo bloqueado" id="3.4" disabled onclick="aprobar(this, ['5.5'])">Neuropsicología</button>
+    <button class="ramo bloqueado" id="3.5" disabled onclick="aprobar(this, ['4.4'])">Psicología del Desarrollo II</button>
+    <button class="ramo bloqueado" id="3.6" disabled>Integración de Saberes I</button>
   </div>
 
   <!-- SEMESTRE 4 -->
@@ -57,25 +57,21 @@
     <button class="ramo bloqueado" id="4.1" disabled onclick="aprobar(this, ['5.1'])">Enfoques II</button>
     <button class="ramo bloqueado" id="4.2" disabled onclick="aprobar(this, ['5.2'])">Metod. Cuantitativa</button>
     <button class="ramo bloqueado" id="4.3" disabled onclick="aprobar(this, ['5.3'])">Psicología Social I</button>
-    <button class="ramo bloqueado" id="4.4" disabled onclick="aprobar(this, ['6.4'])">Personalidad</button>
-    <button class="ramo bloqueado" id="4.5" disabled onclick="aprobar(this, ['5.5'])">Taller Pers. II</button>
-    <button class="ramo bloqueado" id="4.6" disabled onclick="aprobar(this, ['5.6'])">Integración II</button>
+    <button class="ramo bloqueado" id="4.4" disabled onclick="aprobar(this, ['5.4, 5.5'])">Personalidad</button>
+    <button class="ramo bloqueado" id="4.5" disabled onclick="aprobar(this, ['6.5'])">Taller Pers. II</button>
+    <button class="ramo bloqueado" id="4.6" disabled>Integración II</button>
   </div>
 
   <!-- SEMESTRE 5 -->
   <div class="semestre">
     <h2>Semestre 5</h2>
     <button class="ramo bloqueado" id="5.1" disabled onclick="aprobar(this, ['6.1'])">Modelos Teóricos</button>
-    <button class="ramo bloqueado" id="5.2" disabled onclick="aprobar(this, ['8.3'])">Metod. Cualitativa</button>
+    <button class="ramo bloqueado" id="5.2" disabled>Metod. Cualitativa</button>
     <button class="ramo bloqueado" id="5.3" disabled onclick="aprobar(this, ['6.2'])">Psicología Social II</button>
-    <button class="ramo bloqueado" id="5.4" disabled onclick="aprobar(this, ['6.4'])">Psicopatología I</button>
-    <button class="ramo bloqueado" id="5.5" disabled onclick="aprobar(this, ['6.5'])">Psicodiagnóstico I</button>
-    <button class="ramo bloqueado" id="5.6" disabled onclick="aprobar(this, ['6.6'])">Optativo I</button>
+    <button class="ramo bloqueado" id="5.4" disabled onclick="aprobar(this, ['6.1, 6.4'])">Psicopatología I</button>
+    <button class="ramo bloqueado" id="5.5" disabled onclick="aprobar(this, ['6.1, 6.3'])">Psicodiagnóstico I</button>
+    <button class="ramo bloqueado" id="5.6" disabled>Optativo de Profundización</button>
   </div>
-
-  <!-- Puedes seguir pegando aquí los semestres 6-10 en el mismo estilo horizontal -->
-
-</div>
 
 <script>
 function aprobar(boton, siguientes) {
@@ -101,28 +97,28 @@ function aprobar(boton, siguientes) {
   <h2>Semestre 6</h2>
   <button class="ramo bloqueado" id="6.1" disabled onclick="aprobar(this, ['7.1'])">Psicoterapia</button>
   <button class="ramo bloqueado" id="6.2" disabled onclick="aprobar(this, ['7.2'])">Intervención Grupal</button>
-  <button class="ramo bloqueado" id="6.3" disabled onclick="aprobar(this, ['7.3'])">Psicodiagnóstico II</button>
-  <button class="ramo bloqueado" id="6.4" disabled onclick="aprobar(this, ['7.4'])">Psicopatología II</button>
+  <button class="ramo bloqueado" id="6.3" disabled onclick="aprobar(this, ['8.2'])">Psicodiagnóstico II</button>
+  <button class="ramo bloqueado" id="6.4" disabled onclick="aprobar(this, ['8.2'])">Psicopatología II</button>
   <button class="ramo bloqueado" id="6.5" disabled onclick="aprobar(this, ['7.5'])">Liderazgo</button>
-  <button class="ramo bloqueado" id="6.6" disabled onclick="aprobar(this, ['7.6'])">Optativo II</button>
+  <button class="ramo bloqueado" id="6.6" disabled>Optativo II</button>
 </div>
 
 <!-- SEMESTRE 7 -->
 <div class="semestre">
   <h2>Semestre 7</h2>
   <button class="ramo bloqueado" id="7.1" disabled onclick="aprobar(this, ['8.1'])">Clínica Infanto-Juvenil</button>
-  <button class="ramo bloqueado" id="7.2" disabled onclick="aprobar(this, ['8.2'])">Psicología Comunitaria</button>
+  <button class="ramo bloqueado" id="7.2" disabled>Psicología Comunitaria</button>
   <button class="ramo bloqueado" id="7.3" disabled onclick="aprobar(this, ['8.3'])">Educacional I</button>
   <button class="ramo bloqueado" id="7.4" disabled onclick="aprobar(this, ['8.4'])">Organizacional I</button>
-  <button class="ramo bloqueado" id="7.5" disabled onclick="aprobar(this, ['8.5'])">Competencias Profesionales</button>
-  <button class="ramo bloqueado" id="7.6" disabled onclick="aprobar(this, ['8.6'])">Ética Profesional</button>
+  <button class="ramo bloqueado" id="7.5" disabled>Competencias Profesionales</button>
+  <button class="ramo bloqueado" id="7.6" disabled>Ética Profesional</button>
 </div>
 
 <!-- SEMESTRE 8 -->
 <div class="semestre">
   <h2>Semestre 8</h2>
-  <button class="ramo bloqueado" id="8.1" disabled onclick="aprobar(this, ['9.1'])">Clínica Adultos</button>
-  <button class="ramo bloqueado" id="8.2" disabled onclick="aprobar(this, ['9.2'])">Psicología Jurídica</button>
+  <button class="ramo bloqueado" id="8.1" disabled>Clínica Adultos</button>
+  <button class="ramo bloqueado" id="8.2" disabled>Psicología Jurídica</button>
   <button class="ramo bloqueado" id="8.3" disabled>Educacional II</button>
   <button class="ramo bloqueado" id="8.4" disabled>Organizacional II</button>
   <button class="ramo bloqueado" id="8.5" disabled onclick="aprobar(this, ['9.1'])">Proyecto de Tesis</button>
@@ -133,7 +129,7 @@ function aprobar(boton, siguientes) {
 <div class="semestre">
   <h2>Semestre 9</h2>
   <button class="ramo bloqueado" id="9.1" disabled onclick="aprobar(this, ['10.1'])">Tesis</button>
-  <button class="ramo bloqueado" id="9.2" disabled onclick="aprobar(this, ['10.2'])">Práctica I</button>
+  <button class="ramo bloqueado" id="9.2" disabled>Práctica I</button>
 </div>
 
 <!-- SEMESTRE 10 -->
