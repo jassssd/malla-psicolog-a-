@@ -1,30 +1,30 @@
-window.onload = function() {
-  const botones = document.querySelectorAll('.ramo');
-  botones.forEach(boton => {
-    boton.addEventListener('click', () => {
+window.onload = function () {
+  const botones = document.querySelectorAll(".ramo");
+  botones.forEach((boton) => {
+    boton.addEventListener("click", () => {
       if (boton.disabled) return;
-
       aprobar(boton);
     });
   });
 
-  document.getElementById('reset').addEventListener('click', reiniciarMalla);
+  document.getElementById("reset").addEventListener("click", reiniciarMalla);
 
   cargarProgreso();
   actualizarContador();
+  activarRamosSinPrerequisito();
 };
 
 function aprobar(boton) {
-  boton.classList.add('aprobado');
+  boton.classList.add("aprobado");
   boton.disabled = true;
 
-  const siguientesData = boton.getAttribute('data-siguientes');
+  const siguientesData = boton.getAttribute("data-siguientes");
   if (siguientesData) {
     const siguientes = JSON.parse(siguientesData);
-    siguientes.forEach(id => {
+    siguientes.forEach((id) => {
       const sig = document.getElementById(id);
-      if (sig && sig.classList.contains('bloqueado')) {
-        sig.classList.remove('bloqueado');
+      if (sig && sig.classList.contains("bloqueado")) {
+        sig.classList.remove("bloqueado");
         sig.disabled = false;
       }
     });
@@ -32,43 +32,46 @@ function aprobar(boton) {
 
   guardarProgreso();
   actualizarContador();
+  activarRamosSinPrerequisito();
 }
 
 function actualizarContador() {
-  const total = document.querySelectorAll('.ramo').length;
-  const aprobados = document.querySelectorAll('.ramo.aprobado').length;
-  document.getElementById('contador').textContent = `${aprobados}/${total}`;
+  const total = document.querySelectorAll(".ramo").length;
+  const aprobados = document.querySelectorAll(".ramo.aprobado").length;
+  document.getElementById("contador").textContent = `${aprobados}/${total}`;
 }
 
 function guardarProgreso() {
-  const aprobados = Array.from(document.querySelectorAll('.ramo.aprobado')).map(b => b.id);
-  localStorage.setItem('ramos_aprobados', JSON.stringify(aprobados));
+  const aprobados = Array.from(
+    document.querySelectorAll(".ramo.aprobado")
+  ).map((b) => b.id);
+  localStorage.setItem("ramos_aprobados", JSON.stringify(aprobados));
 }
 
 function cargarProgreso() {
-  const data = localStorage.getItem('ramos_aprobados');
+  const data = localStorage.getItem("ramos_aprobados");
   if (!data) return;
 
   const aprobados = JSON.parse(data);
-  aprobados.forEach(id => {
+  aprobados.forEach((id) => {
     const boton = document.getElementById(id);
     if (boton) {
-      boton.classList.add('aprobado');
+      boton.classList.add("aprobado");
       boton.disabled = true;
     }
   });
 
-  aprobados.forEach(id => {
+  aprobados.forEach((id) => {
     const boton = document.getElementById(id);
     if (boton) {
-      const siguientesData = boton.getAttribute('data-siguientes');
+      const siguientesData = boton.getAttribute("data-siguientes");
       if (siguientesData) {
         const siguientes = JSON.parse(siguientesData);
-        siguientes.forEach(sigId => {
+        siguientes.forEach((sigId) => {
           const sigBoton = document.getElementById(sigId);
           if (sigBoton) {
             sigBoton.disabled = false;
-            sigBoton.classList.remove('bloqueado');
+            sigBoton.classList.remove("bloqueado");
           }
         });
       }
@@ -76,14 +79,28 @@ function cargarProgreso() {
   });
 
   actualizarContador();
+  activarRamosSinPrerequisito();
 }
 
 function reiniciarMalla() {
-  const botones = document.querySelectorAll('.ramo');
-  botones.forEach(boton => {
-    boton.classList.remove('aprobado');
-    boton.disabled = boton.classList.contains('bloqueado');
+  const botones = document.querySelectorAll(".ramo");
+  botones.forEach((boton) => {
+    boton.classList.remove("aprobado");
+    boton.disabled = boton.classList.contains("bloqueado");
   });
-  localStorage.removeItem('ramos_aprobados');
+  localStorage.removeItem("ramos_aprobados");
   actualizarContador();
+  activarRamosSinPrerequisito();
+}
+
+function activarRamosSinPrerequisito() {
+  const ramos = document.querySelectorAll('.ramo');
+  ramos.forEach(boton => {
+    const yaAprobado = boton.classList.contains('aprobado');
+    const tienePrerequisitos = boton.getAttribute('data-siguientes') !== null;
+    const esBloqueado = boton.classList.contains('bloqueado');
+    if (!yaAprobado && !esBloqueado && !tienePrerequisitos) {
+      boton.disabled = false;
+    }
+  });
 }
