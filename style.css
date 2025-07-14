@@ -70,15 +70,6 @@ h1 {
   background-color: #d7bde2 !important; /* morado pastel */
 }
 
-.clínico { background-color: #ffe0e0; }
-.educacional { background-color: #e0f7fa; }
-.organizacional { background-color: #fff3e0; }
-.comunitario { background-color: #f3e5f5; }
-.metodología { background-color: #e0f2f1; }
-.formación { background-color: #e0e0e0; }
-.personal { background-color: #f0f4c3; }
-.tesis { background-color: #fbe9e7; }
-
 button#reset {
   background: #f1948a; /* rojo suave pastel */
   color: white;
