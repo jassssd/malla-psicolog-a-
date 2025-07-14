@@ -7,10 +7,24 @@
 </head>
 <body>
 
+<!-- Descripción con botón desplegable -->
+<div class="descripcion">
+  <button id="toggleInfo">¿Cómo usar esta malla? ▼</button>
+  <div id="infoContenido" style="display: none;">
+    <p><strong>Significado de los colores:</strong></p>
+    <ul>
+      <li>🎓 <span class="color aprobado">Aprobado:</span> Has cursado y aprobado este ramo.</li>
+      <li>🔓 <span class="color disponible">Disponible:</span> Puedes cursar este ramo.</li>
+      <li>🔒 <span class="color bloqueado">Bloqueado:</span> No puedes cursarlo aún.</li>
+    </ul>
+    <p>Haz clic en los ramos para marcarlos como aprobados. Tu avance se guarda automáticamente en tu navegador.</p>
+  </div>
+</div>
+
 <h1>Malla Interactiva - Psicología UCSC</h1>
 
 <div class="top-bar">
-  <div class="progress">Ramos aprobados: <span id="contador"></span></div>
+  <div class="progress">Ramos aprobados: <span id="contador">0</span>/70</div>
   <button id="reset">Reiniciar</button>
 </div>
 
