@@ -1,22 +1,35 @@
-<script>
-function aprobar(boton, siguientes = []) {
-  const id = boton.id;
+window.onload = function() {
+  const botones = document.querySelectorAll('.ramo');
+  botones.forEach(boton => {
+    boton.addEventListener('click', () => {
+      if (boton.disabled) return;
+
+      aprobar(boton);
+    });
+  });
+
+  document.getElementById('reset').addEventListener('click', reiniciarMalla);
+
+  cargarProgreso();
+  actualizarContador();
+};
+
+function aprobar(boton) {
   boton.classList.add('aprobado');
   boton.disabled = true;
 
-  if (!Array.isArray(siguientes)) {
-    siguientes = [siguientes];
+  const siguientesData = boton.getAttribute('data-siguientes');
+  if (siguientesData) {
+    const siguientes = JSON.parse(siguientesData);
+    siguientes.forEach(id => {
+      const sig = document.getElementById(id);
+      if (sig && sig.classList.contains('bloqueado')) {
+        sig.classList.remove('bloqueado');
+        sig.disabled = false;
+      }
+    });
   }
 
-  siguientes.forEach(id => {
-    const sig = document.getElementById(id);
-    if (sig && sig.classList.contains('bloqueado')) {
-      sig.classList.remove('bloqueado');
-      sig.disabled = false;
-    }
-  });
-
-  // Guardar en localStorage
   guardarProgreso();
   actualizarContador();
 }
@@ -44,9 +57,33 @@ function cargarProgreso() {
       boton.disabled = true;
     }
   });
+
+  aprobados.forEach(id => {
+    const boton = document.getElementById(id);
+    if (boton) {
+      const siguientesData = boton.getAttribute('data-siguientes');
+      if (siguientesData) {
+        const siguientes = JSON.parse(siguientesData);
+        siguientes.forEach(sigId => {
+          const sigBoton = document.getElementById(sigId);
+          if (sigBoton) {
+            sigBoton.disabled = false;
+            sigBoton.classList.remove('bloqueado');
+          }
+        });
+      }
+    }
+  });
+
+  actualizarContador();
 }
 
 function reiniciarMalla() {
   const botones = document.querySelectorAll('.ramo');
   botones.forEach(boton => {
-    boton.c
+    boton.classList.remove('aprobado');
+    boton.disabled = boton.classList.contains('bloqueado');
+  });
+  localStorage.removeItem('ramos_aprobados');
+  actualizarContador();
+}
