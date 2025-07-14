@@ -12,6 +12,16 @@ window.onload = function () {
   cargarProgreso();
   actualizarContador();
   activarRamosSinPrerequisito();
+
+  // Listener para el botón que muestra/oculta la info
+  const toggleBtn = document.getElementById("toggleInfo");
+  const infoContenido = document.getElementById("infoContenido");
+
+  toggleBtn.addEventListener("click", function () {
+    const visible = infoContenido.style.display === "block";
+    infoContenido.style.display = visible ? "none" : "block";
+    this.textContent = visible ? "¿Cómo usar esta malla? ▼" : "¿Cómo usar esta malla? ▲";
+  });
 };
 
 function aprobar(boton) {
@@ -88,11 +98,3 @@ function activarRamosSinPrerequisito() {
     }
   });
 }
-
-// Mostrar/ocultar la descripción
-document.getElementById("toggleInfo").addEventListener("click", function () {
-  const contenido = document.getElementById("infoContenido");
-  const visible = contenido.style.display === "block";
-  contenido.style.display = visible ? "none" : "block";
-  this.textContent = visible ? "¿Cómo usar esta malla? ▼" : "¿Cómo usar esta malla? ▲";
-});
