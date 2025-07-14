@@ -1,13 +1,13 @@
 body {
   font-family: sans-serif;
-  background: #f9f9f9;
+  background: #e6f7f4; /* verde agua claro */
   margin: 0;
   padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: #b30000;
+  color: #8e44ad; /* morado pastel */
   margin-bottom: 10px;
 }
 
@@ -58,6 +58,7 @@ h1 {
   color: #222;
   cursor: pointer;
   transition: 0.3s;
+  background-color: #a8d8ea; /* celeste pastel por defecto */
 }
 
 .bloqueado {
@@ -66,7 +67,7 @@ h1 {
 }
 
 .aprobado {
-  background-color: #a8e6a1 !important;
+  background-color: #d7bde2 !important; /* morado pastel */
 }
 
 .clínico { background-color: #ffe0e0; }
@@ -79,7 +80,7 @@ h1 {
 .tesis { background-color: #fbe9e7; }
 
 button#reset {
-  background: #ff5252;
+  background: #f1948a; /* rojo suave pastel */
   color: white;
   border: none;
   border-radius: 6px;
