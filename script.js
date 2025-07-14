@@ -98,9 +98,9 @@ function activarRamosSinPrerequisito() {
   ramos.forEach(boton => {
     const yaAprobado = boton.classList.contains('aprobado');
     const tienePrerequisitos = boton.getAttribute('data-siguientes') !== null;
-    const esBloqueado = boton.classList.contains('bloqueado');
-    if (!yaAprobado && !esBloqueado && !tienePrerequisitos) {
+    if (!yaAprobado && !tienePrerequisitos) {
       boton.disabled = false;
+      boton.classList.remove('bloqueado');
     }
   });
 }
