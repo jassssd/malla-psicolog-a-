@@ -1,5 +1,6 @@
 window.onload = function () {
   const botones = document.querySelectorAll(".ramo");
+
   botones.forEach((boton) => {
     boton.addEventListener("click", () => {
       if (boton.disabled) return;
@@ -17,19 +18,6 @@ window.onload = function () {
 function aprobar(boton) {
   boton.classList.add("aprobado");
   boton.disabled = true;
-
-  // Ya no desbloqueamos aquí directamente
-  // const siguientesData = boton.getAttribute("data-siguientes");
-  // if (siguientesData) {
-  //   const siguientes = JSON.parse(siguientesData);
-  //   siguientes.forEach((id) => {
-  //     const sig = document.getElementById(id);
-  //     if (sig && sig.classList.contains("bloqueado")) {
-  //       sig.classList.remove("bloqueado");
-  //       sig.disabled = false;
-  //     }
-  //   });
-  // }
 
   guardarProgreso();
   actualizarContador();
@@ -78,6 +66,18 @@ function reiniciarMalla() {
 }
 
 function activarRamosSinPrerequisito() {
-  const ramos = document.querySelectorAll('.ramo');
+  const ramos = document.querySelectorAll(".ramo.bloqueado");
   const aprobados = new Set(
-    Array.from(docume
+    Array.from(document.querySelectorAll(".ramo.aprobado")).map((b) => b.id)
+  );
+
+  ramos.forEach((ramo) => {
+    const prereqs = JSON.parse(ramo.getAttribute("data-prerequisitos") || "[]");
+    const todosCumplidos = prereqs.every((req) => aprobados.has(req));
+
+    if (todosCumplidos) {
+      ramo.classList.remove("bloqueado");
+      ramo.disabled = false;
+    }
+  });
+}
