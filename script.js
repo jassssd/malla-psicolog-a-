@@ -11,16 +11,15 @@ window.onload = function () {
 
   cargarProgreso();
   actualizarContador();
-  activarRamosSinPrerequisito();
+  activarRamosSegunPrerequisitos();
 
-  // Listener para el botón que muestra/oculta la info
+  // Toggle info ayuda
   const toggleBtn = document.getElementById("toggleInfo");
   const infoContenido = document.getElementById("infoContenido");
-
-  toggleBtn.addEventListener("click", function () {
+  toggleBtn.addEventListener("click", () => {
     const visible = infoContenido.style.display === "block";
     infoContenido.style.display = visible ? "none" : "block";
-    this.textContent = visible ? "¿Cómo usar esta malla? ▼" : "¿Cómo usar esta malla? ▲";
+    toggleBtn.textContent = visible ? "¿Cómo usar esta malla? ▼" : "¿Cómo usar esta malla? ▲";
   });
 };
 
@@ -30,7 +29,7 @@ function aprobar(boton) {
 
   guardarProgreso();
   actualizarContador();
-  activarRamosSinPrerequisito();
+  activarRamosSegunPrerequisitos();
 }
 
 function actualizarContador() {
@@ -40,61 +39,64 @@ function actualizarContador() {
 }
 
 function guardarProgreso() {
-  const aprobados = Array.from(
-    document.querySelectorAll(".ramo.aprobado")
-  ).map((b) => b.id);
+  const aprobados = Array.from(document.querySelectorAll(".ramo.aprobado")).map(b => b.id);
   localStorage.setItem("ramos_aprobados", JSON.stringify(aprobados));
 }
 
 function cargarProgreso() {
   const data = localStorage.getItem("ramos_aprobados");
   if (!data) return;
-
   const aprobados = JSON.parse(data);
-  aprobados.forEach((id) => {
+  aprobados.forEach(id => {
     const boton = document.getElementById(id);
     if (boton) {
       boton.classList.add("aprobado");
       boton.disabled = true;
+      // Al aprobar, seguro ya no es bloqueado
+      boton.classList.remove("bloqueado");
     }
   });
-
-  actualizarContador();
-  activarRamosSinPrerequisito();
 }
 
 function reiniciarMalla() {
   const botones = document.querySelectorAll(".ramo");
-  botones.forEach((boton) => {
+  botones.forEach(boton => {
     boton.classList.remove("aprobado");
-    boton.disabled = boton.classList.contains("bloqueado");
+    const prereq = boton.getAttribute("data-prerequisitos");
+    if (prereq) {
+      // Si tiene prerequisitos, bloqueamos y deshabilitamos
+      boton.classList.add("bloqueado");
+      boton.disabled = true;
+    } else {
+      // Si no tiene prereq, habilitamos y desbloqueamos
+      boton.classList.remove("bloqueado");
+      boton.disabled = false;
+    }
   });
   localStorage.removeItem("ramos_aprobados");
   actualizarContador();
-  activarRamosSinPrerequisito();
+  activarRamosSegunPrerequisitos();
 }
 
-function activarRamosSinPrerequisito() {
-  const ramos = document.querySelectorAll('.ramo');
+function activarRamosSegunPrerequisitos() {
   const aprobados = new Set(
-    Array.from(document.querySelectorAll('.ramo.aprobado')).map(b => b.id)
+    Array.from(document.querySelectorAll(".ramo.aprobado")).map(b => b.id)
   );
 
-  ramos.forEach(ramo => {
-    if (ramo.classList.contains('bloqueado')) {
-      const prereqData = ramo.getAttribute('data-prerequisitos');
-      if (!prereqData) return;
-      const prereqs = JSON.parse(prereqData);
+  const botones = document.querySelectorAll(".ramo.bloqueado");
+  botones.forEach(boton => {
+    const prereqData = boton.getAttribute("data-prerequisitos");
+    if (!prereqData) return; // Sin prereq no cambia
 
-      const todosAprobados = prereqs.every(id => aprobados.has(id));
+    const prereqs = JSON.parse(prereqData);
+    const desbloquear = prereqs.every(id => aprobados.has(id));
 
-      if (todosAprobados) {
-        ramo.classList.remove('bloqueado');
-        ramo.disabled = false;
-      } else {
-        ramo.classList.add('bloqueado');
-        ramo.disabled = true;
-      }
+    if (desbloquear) {
+      boton.classList.remove("bloqueado");
+      boton.disabled = false;
+    } else {
+      boton.classList.add("bloqueado");
+      boton.disabled = true;
     }
   });
 }
