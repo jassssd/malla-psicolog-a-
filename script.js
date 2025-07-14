@@ -95,12 +95,31 @@ function reiniciarMalla() {
 
 function activarRamosSinPrerequisito() {
   const ramos = document.querySelectorAll('.ramo');
+  const aprobados = new Set(
+    Array.from(document.querySelectorAll('.ramo.aprobado')).map(b => b.id)
+  );
+
   ramos.forEach(boton => {
-    const yaAprobado = boton.classList.contains('aprobado');
-    const tienePrerequisitos = boton.getAttribute('data-siguientes') !== null;
-    if (!yaAprobado && !tienePrerequisitos) {
+    if (boton.classList.contains('aprobado')) {
+      boton.disabled = true;
+      return;
+    }
+    const prereqData = boton.getAttribute('data-prerequisitos');
+    if (!prereqData) {
+      // No tiene prerequisitos, desbloquear
       boton.disabled = false;
       boton.classList.remove('bloqueado');
+    } else {
+      const prereqs = JSON.parse(prereqData);
+      // Si todos los prerequisitos están aprobados, desbloquear
+      const todosAprobados = prereqs.every(pr => aprobados.has(pr));
+      if (todosAprobados) {
+        boton.disabled = false;
+        boton.classList.remove('bloqueado');
+      } else {
+        boton.disabled = true;
+        boton.classList.add('bloqueado');
+      }
     }
   });
 }
