@@ -70,34 +70,11 @@ function reiniciarMalla() {
   const botones = document.querySelectorAll(".ramo");
   botones.forEach(boton => {
     boton.classList.remove("aprobado");
-
-    // Controlamos si tiene prerequisitos para bloquearlo o no
-    const prereq = boton.getAttribute("data-prerequisitos");
-    if (prereq) {
-      try {
-        const prereqs = JSON.parse(prereq);
-        if (prereqs.length > 0) {
-          boton.classList.add("bloqueado");
-          boton.disabled = true;
-        } else {
-          boton.classList.remove("bloqueado");
-          boton.disabled = false;
-        }
-      } catch {
-        // Si el JSON está mal, mejor dejar desbloqueado para no bloquear todo
-        boton.classList.remove("bloqueado");
-        boton.disabled = false;
-      }
-    } else {
-      // Si no tiene prereq, desbloqueado y habilitado
-      boton.classList.remove("bloqueado");
-      boton.disabled = false;
-    }
   });
 
   localStorage.removeItem("ramos_aprobados");
-  actualizarContador();
   activarRamosSegunPrerequisitos();
+  actualizarContador();
 }
 
 function activarRamosSegunPrerequisitos() {
@@ -105,21 +82,35 @@ function activarRamosSegunPrerequisitos() {
     Array.from(document.querySelectorAll(".ramo.aprobado")).map(b => b.id)
   );
 
-  const botones = document.querySelectorAll(".ramo.bloqueado");
+  const botones = document.querySelectorAll(".ramo");
   botones.forEach(boton => {
     const prereqData = boton.getAttribute("data-prerequisitos");
-    if (!prereqData) return;
+    if (!prereqData) {
+      // No tiene prerequisitos, desbloqueado siempre
+      boton.classList.remove("bloqueado");
+      boton.disabled = false;
+      return;
+    }
 
     let prereqs;
     try {
       prereqs = JSON.parse(prereqData);
     } catch (e) {
       console.warn(`Prerrequisitos inválidos en ramo ${boton.id}`, e);
+      boton.classList.remove("bloqueado");
+      boton.disabled = false;
+      return;
+    }
+
+    // Si el ramo ya está aprobado, siempre debe estar deshabilitado y sin bloqueo
+    if (boton.classList.contains("aprobado")) {
+      boton.classList.remove("bloqueado");
+      boton.disabled = true;
       return;
     }
 
     // Si todos los prerequisitos están aprobados, desbloqueamos
-    const desbloquear = prereqs.every(id => aprobados.has(id));
+    const desbloquear = prereqs.length === 0 || prereqs.every(id => aprobados.has(id));
 
     if (desbloquear) {
       boton.classList.remove("bloqueado");
