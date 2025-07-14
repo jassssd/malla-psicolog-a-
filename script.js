@@ -1,8 +1,10 @@
 window.onload = function () {
   const botones = document.querySelectorAll(".ramo");
+
+  // Añadimos listener a cada ramo para aprobarlo al hacer clic
   botones.forEach((boton) => {
     boton.addEventListener("click", () => {
-      if (boton.disabled) return;
+      if (boton.disabled) return; // Si está bloqueado o ya aprobado, no hace nada
       aprobar(boton);
     });
   });
@@ -13,9 +15,10 @@ window.onload = function () {
   actualizarContador();
   activarRamosSegunPrerequisitos();
 
-  // Toggle info ayuda
+  // Toggle para la info de uso
   const toggleBtn = document.getElementById("toggleInfo");
   const infoContenido = document.getElementById("infoContenido");
+
   toggleBtn.addEventListener("click", () => {
     const visible = infoContenido.style.display === "block";
     infoContenido.style.display = visible ? "none" : "block";
@@ -46,33 +49,52 @@ function guardarProgreso() {
 function cargarProgreso() {
   const data = localStorage.getItem("ramos_aprobados");
   if (!data) return;
-  const aprobados = JSON.parse(data);
-  aprobados.forEach(id => {
-    const boton = document.getElementById(id);
-    if (boton) {
-      boton.classList.add("aprobado");
-      boton.disabled = true;
-      // Al aprobar, seguro ya no es bloqueado
-      boton.classList.remove("bloqueado");
-    }
-  });
+
+  try {
+    const aprobados = JSON.parse(data);
+    aprobados.forEach(id => {
+      const boton = document.getElementById(id);
+      if (boton) {
+        boton.classList.add("aprobado");
+        boton.disabled = true;
+        boton.classList.remove("bloqueado");
+      }
+    });
+  } catch (e) {
+    console.error("Error al leer progreso guardado:", e);
+    localStorage.removeItem("ramos_aprobados");
+  }
 }
 
 function reiniciarMalla() {
   const botones = document.querySelectorAll(".ramo");
   botones.forEach(boton => {
     boton.classList.remove("aprobado");
+
+    // Controlamos si tiene prerequisitos para bloquearlo o no
     const prereq = boton.getAttribute("data-prerequisitos");
     if (prereq) {
-      // Si tiene prerequisitos, bloqueamos y deshabilitamos
-      boton.classList.add("bloqueado");
-      boton.disabled = true;
+      try {
+        const prereqs = JSON.parse(prereq);
+        if (prereqs.length > 0) {
+          boton.classList.add("bloqueado");
+          boton.disabled = true;
+        } else {
+          boton.classList.remove("bloqueado");
+          boton.disabled = false;
+        }
+      } catch {
+        // Si el JSON está mal, mejor dejar desbloqueado para no bloquear todo
+        boton.classList.remove("bloqueado");
+        boton.disabled = false;
+      }
     } else {
-      // Si no tiene prereq, habilitamos y desbloqueamos
+      // Si no tiene prereq, desbloqueado y habilitado
       boton.classList.remove("bloqueado");
       boton.disabled = false;
     }
   });
+
   localStorage.removeItem("ramos_aprobados");
   actualizarContador();
   activarRamosSegunPrerequisitos();
@@ -86,9 +108,17 @@ function activarRamosSegunPrerequisitos() {
   const botones = document.querySelectorAll(".ramo.bloqueado");
   botones.forEach(boton => {
     const prereqData = boton.getAttribute("data-prerequisitos");
-    if (!prereqData) return; // Sin prereq no cambia
+    if (!prereqData) return;
 
-    const prereqs = JSON.parse(prereqData);
+    let prereqs;
+    try {
+      prereqs = JSON.parse(prereqData);
+    } catch (e) {
+      console.warn(`Prerrequisitos inválidos en ramo ${boton.id}`, e);
+      return;
+    }
+
+    // Si todos los prerequisitos están aprobados, desbloqueamos
     const desbloquear = prereqs.every(id => aprobados.has(id));
 
     if (desbloquear) {
