@@ -57,17 +57,26 @@ h1 {
   text-align: left;
   color: #222;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
   background-color: #a8d8ea; /* celeste pastel por defecto */
 }
 
+.ramo:hover:not(.bloqueado):not(.aprobado) {
+  background-color: #88cde2;
+  transform: scale(1.02);
+}
+
 .bloqueado {
-  background-color: #ccc !important;
+  background-color: #dddddd !important;
+  color: #888 !important;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .aprobado {
   background-color: #d7bde2 !important; /* morado pastel */
+  color: #4a235a !important;
+  cursor: default;
 }
 
 button#reset {
@@ -77,4 +86,9 @@ button#reset {
   border-radius: 6px;
   padding: 8px 16px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button#reset:hover {
+  background: #ec7063;
 }
