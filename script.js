@@ -1,70 +1,52 @@
-function aprobar(boton, siguientes) {
-  if (boton.classList.contains('aprobado')) return;
-
+<script>
+function aprobar(boton, siguientes = []) {
+  const id = boton.id;
   boton.classList.add('aprobado');
   boton.disabled = true;
 
-  guardarEstado(boton.id);
-
-  if (siguientes && siguientes.length > 0) {
-    siguientes.forEach(id => {
-      const sig = document.getElementById(id);
-      if (sig && !sig.classList.contains('aprobado')) {
-        sig.disabled = false;
-        sig.classList.remove('bloqueado');
-      }
-    });
+  if (!Array.isArray(siguientes)) {
+    siguientes = [siguientes];
   }
 
-  actualizarContador();
-}
-
-function guardarEstado(id) {
-  let aprobados = JSON.parse(localStorage.getItem('aprobados')) || [];
-  if (!aprobados.includes(id)) {
-    aprobados.push(id);
-    localStorage.setItem('aprobados', JSON.stringify(aprobados));
-  }
-}
-
-function cargarEstado() {
-  const aprobados = JSON.parse(localStorage.getItem('aprobados')) || [];
-  aprobados.forEach(id => {
-    const ramo = document.getElementById(id);
-    if (ramo) {
-      ramo.classList.add('aprobado');
-      ramo.disabled = true;
+  siguientes.forEach(id => {
+    const sig = document.getElementById(id);
+    if (sig && sig.classList.contains('bloqueado')) {
+      sig.classList.remove('bloqueado');
+      sig.disabled = false;
     }
   });
 
-  // Desbloqueo simple de los no aprobados
-  document.querySelectorAll('.ramo').forEach(btn => {
-    if (!btn.classList.contains('aprobado') && !btn.classList.contains('bloqueado')) {
-      btn.disabled = false;
-    }
-  });
-
-  actualizarContador();
-}
-
-function reiniciarMalla() {
-  if (!confirm("¿Seguro que quieres reiniciar todo el avance?")) return;
-  localStorage.removeItem('aprobados');
-  document.querySelectorAll('.ramo').forEach(btn => {
-    btn.classList.remove('aprobado');
-    if (btn.classList.contains('bloqueado')) {
-      btn.disabled = true;
-    } else {
-      btn.disabled = false;
-    }
-  });
+  // Guardar en localStorage
+  guardarProgreso();
   actualizarContador();
 }
 
 function actualizarContador() {
   const total = document.querySelectorAll('.ramo').length;
   const aprobados = document.querySelectorAll('.ramo.aprobado').length;
-  document.getElementById('contador').innerText = `${aprobados}/${total}`;
+  document.getElementById('contador').textContent = `${aprobados}/${total}`;
 }
 
-window.onload = cargarEstado;
+function guardarProgreso() {
+  const aprobados = Array.from(document.querySelectorAll('.ramo.aprobado')).map(b => b.id);
+  localStorage.setItem('ramos_aprobados', JSON.stringify(aprobados));
+}
+
+function cargarProgreso() {
+  const data = localStorage.getItem('ramos_aprobados');
+  if (!data) return;
+
+  const aprobados = JSON.parse(data);
+  aprobados.forEach(id => {
+    const boton = document.getElementById(id);
+    if (boton) {
+      boton.classList.add('aprobado');
+      boton.disabled = true;
+    }
+  });
+}
+
+function reiniciarMalla() {
+  const botones = document.querySelectorAll('.ramo');
+  botones.forEach(boton => {
+    boton.c
